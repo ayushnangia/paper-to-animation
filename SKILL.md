@@ -1,6 +1,11 @@
 ---
 name: paper-to-animation
-description: "Use when creating an animated video explainer for a research paper. Guides the full pipeline: reading the paper, writing a storyboard, extracting key data, generating Manim scenes, and rendering to MP4/GIF. Works for any paper, not just ISO-Bench."
+description: Use when creating an animated video explainer for a research paper. Triggers include any mention of 'paper video', 'paper animation', 'explainer video', 'Manim', or requests to turn a paper into a social media clip. Also use when the user has a PDF or LaTeX source and wants an animated breakdown of results, methods, or key findings. Works for any paper from any venue.
+license: MIT
+compatibility: Requires Manim Community Edition v0.19+, Python 3.10+, and ffmpeg for GIF export
+metadata:
+  author: ayushnangia
+  version: "1.0"
 ---
 
 # Paper to Animation
