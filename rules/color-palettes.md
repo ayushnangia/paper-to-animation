@@ -1,3 +1,10 @@
+---
+name: color-palettes
+description: Color palettes for dark and light backgrounds, AI company brand colors, and chart differentiation
+metadata:
+  tags: color, palette, dark theme, light theme, brand, AI, chart, hex
+---
+
 # Color Palettes
 
 ## GitHub Dark Theme (Recommended for Twitter/X)
@@ -34,7 +41,7 @@ For presentations on light backgrounds.
 
 ## AI Company Brand Colors
 
-Use when papers compare AI agents or models. These are adjusted for visibility on dark backgrounds.
+Use when papers compare AI agents or models. Adjusted for visibility on dark backgrounds.
 
 ### Anthropic (Claude)
 
@@ -87,7 +94,7 @@ Use when papers compare AI agents or models. These are adjusted for visibility o
 
 ## Chart Differentiation
 
-When you have 4+ entities, use colors that are maximally distinct. Tested combinations for dark backgrounds:
+When you have 4+ entities, use colors that are maximally distinct.
 
 **4 entities (recommended):**
 ```python
@@ -111,9 +118,15 @@ COLORS = {
 }
 ```
 
-## Manim Color Constants
+## Opacity Guidelines
 
-Manim provides built-in color constants. For custom hex colors, pass the string directly:
+For fill opacity and stroke on dark backgrounds:
+- **Bars / shapes:** `fill_opacity=0.85-0.95` (high, for solid fills)
+- **Pill labels:** `fill_opacity=0.22`, `stroke_opacity=0.9` (frosted glass)
+- **Highlights / glows:** `fill_opacity=0.06`, `stroke_opacity=0.35` (subtle)
+- **Watermark logos:** `opacity=0.5-0.6` (visible but not distracting)
+
+## Manim Color Constants
 
 ```python
 # Built-in
@@ -124,9 +137,3 @@ color=WHITE        # Manim's white
 fill_color="#D4764E"
 color="#0d1117"
 ```
-
-For fill opacity and stroke on dark backgrounds:
-- **Bars / shapes:** `fill_opacity=0.85-0.95` (high, for solid fills)
-- **Pill labels:** `fill_opacity=0.22`, `stroke_opacity=0.9` (frosted glass)
-- **Highlights / glows:** `fill_opacity=0.06`, `stroke_opacity=0.35` (subtle)
-- **Watermark logos:** `opacity=0.5-0.6` (visible but not distracting)

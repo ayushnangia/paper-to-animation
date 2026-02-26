@@ -1,50 +1,111 @@
 # Paper to Animation
 
-An [Agent Skill](https://agentskills.io) that turns research papers into animated explainer videos using Manim.
+![License](https://img.shields.io/github/license/ayushnangia/paper-to-animation?style=flat-square)
 
-Six phases: read the paper, write a storyboard, extract data, optionally design a character, generate the Manim script, render and export.
+> **Quick Start:** Add this skill to your AI agent:
+> ```bash
+> npx skills add ayushnangia/paper-to-animation
+> ```
 
-Narrative first, code second. The storyboard drives everything.
+Turn any research paper into a polished animated explainer video using **Manim Community Edition**. This repository provides battle-tested patterns, templates, and examples for the full pipeline: paper comprehension, storyboard design, data extraction, Manim script generation, and rendering.
 
 ![Deep-Thinking Tokens animation](examples/deep-thinking-tokens/deep_thinking_video.gif)
 
-## Install
+## Installation
 
-### Claude Code
+### Prerequisites
+
+1. **Python 3.10+**
+2. **FFmpeg** - for video encoding
+3. **LaTeX** - for MathTex rendering (TeX Live, MiKTeX, or MacTeX)
+
+```bash
+# Install Manim Community Edition
+pip install manim
+
+# Verify installation
+manim checkhealth
+```
+
+#### FFmpeg
+
+**macOS:**
+```bash
+brew install ffmpeg
+```
+
+**Ubuntu/Debian:**
+```bash
+sudo apt update && sudo apt install ffmpeg
+```
+
+### Installing the Skill
+
+#### With npx (Recommended)
+
+```bash
+npx skills add ayushnangia/paper-to-animation
+```
+
+#### With Claude Code
 
 ```bash
 claude install ayushnangia/paper-to-animation
 ```
 
-### Manual
-
-Clone into your skills directory:
+#### Manual
 
 ```bash
 git clone https://github.com/ayushnangia/paper-to-animation.git ~/.claude/skills/paper-to-animation
 ```
 
-### Other agents
+### What are Skills?
 
-Copy the `SKILL.md` and `references/` directory into wherever your agent reads skills from. The format follows the open [Agent Skills spec](https://agentskills.io/specification).
+Skills are **reusable capabilities for AI coding agents**. Once installed, your AI assistant automatically gains access to:
+- Domain-specific best practices
+- Working code examples
+- Common patterns and pitfalls to avoid
+- Step-by-step workflows
 
-## What's in here
+The skill follows the [Agent Skills open standard](https://agentskills.io) and works across multiple AI tools.
+
+### When This Skill Activates
+
+Automatically loads when:
+- You mention "paper video", "paper animation", or "explainer video"
+- You have a PDF or LaTeX source and want an animated breakdown
+- You want a social media clip or promo video for a paper launch
+- You are working with Manim and research content
+
+## Repository Structure
 
 ```
-SKILL.md                              # Full pipeline (6 phases)
-references/
-  storyboard-template.md              # Blank storyboard with scene archetypes
-  manim-scaffold.py                   # Starter Scene class with txt(), scene_wipe(), pill()
-  color-palettes.md                   # GitHub dark/light, AI company brand colors
-  ffmpeg-recipes.md                   # GIF export, clip extraction, thumbnails
-examples/
-  deep-thinking-tokens/               # Worked example (arXiv 2602.13517)
-    storyboard.md                     # 6-scene storyboard
-    deep_thinking_video.py            # Full Manim script
-    deep_thinking_video.gif           # Final output
+paper-to-animation/
+├── SKILL.md                              # Main skill - pipeline overview + quick reference
+├── rules/                                # Individual best practice guides
+│   ├── paper-comprehension.md            # Phase 1: Reading the paper
+│   ├── storyboard-design.md              # Phase 2: Designing scenes
+│   ├── data-extraction.md                # Phase 3: Extracting numbers + colors
+│   ├── character-design.md               # Phase 4: Building a mascot (optional)
+│   ├── manim-script.md                   # Phase 5: Generating the Manim script
+│   ├── rendering.md                      # Phase 6: Render + export
+│   ├── text-rendering.md                 # Width-aware Pango text helper
+│   ├── color-palettes.md                 # Dark/light themes, brand colors
+│   ├── scene-transitions.md              # Scene wipe patterns
+│   └── common-mistakes.md               # Pitfalls and fixes
+├── references/                           # Templates to copy and modify
+│   ├── storyboard-template.md            # Blank storyboard
+│   ├── manim-scaffold.py                 # Starter Scene class
+│   └── ffmpeg-recipes.md                 # Complete ffmpeg commands
+├── examples/
+│   └── deep-thinking-tokens/             # Worked example (arXiv 2602.13517)
+│       ├── storyboard.md
+│       ├── deep_thinking_video.py
+│       └── deep_thinking_video.gif
+└── LICENSE
 ```
 
-## The pipeline
+## The Pipeline
 
 | Phase | What | Output |
 |-------|------|--------|
@@ -55,17 +116,28 @@ examples/
 | 5. Manim script | One Scene class, one method per scene | `.py` file |
 | 6. Render and export | Test at `-ql`, final at `-qh`, GIF via ffmpeg | MP4 + GIF |
 
-## Quick start (without an agent)
+## Exploring the Skill
+
+Start with these guides in `rules/`:
+
+1. **paper-comprehension.md** - How to read a paper and find the story arc
+2. **storyboard-design.md** - Scene archetypes and timing
+3. **text-rendering.md** - The Pango kerning fix (most important Manim technique)
+4. **manim-script.md** - Animation patterns (bar charts, counters, pills)
+5. **common-mistakes.md** - Pitfalls to avoid
+
+## Quick Start (without an agent)
 
 1. Read `SKILL.md` for the full workflow
 2. Copy `references/storyboard-template.md` to your project and fill it in
 3. Copy `references/manim-scaffold.py` as your starting script
 4. Replace placeholder data with numbers from your paper
 5. Render: `manim -ql script.py ClassName` (test), `manim -qh script.py ClassName` (final)
+6. Export GIF: see `rules/rendering.md`
 
-## Key patterns
+## Key Patterns
 
-**Width-aware text rendering** - The Pango scale trick renders text at Nx size then scales down for crisp kerning. But long strings at large rendered sizes hit Pango's internal line-wrap limit (~3000px), causing overlapping text. The `txt()` helper in the scaffold caps the multiplier based on string length:
+**Width-aware text rendering** - Pango's kerning breaks at small pixel sizes. Render at Nx size then scale down. But long strings at large rendered sizes hit Pango's internal line-wrap limit (~3000px). The `txt()` helper caps the multiplier based on string length:
 
 ```python
 longest_line = max(s.split("\n"), key=len)
@@ -86,23 +158,35 @@ title = VGroup(t1, t2).arrange(DOWN, buff=0.12)
 ```python
 LABEL_LEFT = -5.8
 label.align_to(np.array([LABEL_LEFT, 0, 0]), LEFT)
-label.set_y(row_y)
 ```
 
 ## Example
 
 The `examples/deep-thinking-tokens/` directory has a complete worked example for "Think Deep, Not Just Long" (arXiv 2602.13517). 6 scenes, 24 seconds, covering correlation results, the DTR method diagram, and Think@n cost comparison.
 
-## Requirements
+## Contributing
 
-- Python 3.10+
-- [Manim Community Edition](https://docs.manim.community/) v0.19+
-- ffmpeg (for GIF export)
+Found an issue? Want to add a new rule or example?
 
-```bash
-pip install manim
-```
+1. Ensure your code example works with Manim Community Edition
+2. Add it to the appropriate rule file or create a new one in `rules/`
+3. Submit a pull request
 
 ## License
 
 MIT
+
+## Acknowledgments
+
+### Manim Community
+The dedicated team maintaining [Manim Community Edition](https://github.com/ManimCommunity/manim) - the framework that makes all of this possible.
+
+### Grant Sanderson (3Blue1Brown)
+Creator of the original Manim animation engine and the [3Blue1Brown](https://www.youtube.com/@3blue1brown) YouTube channel, whose work inspired an entirely new paradigm for mathematical visualization.
+
+## Resources
+
+- [Manim Community Docs](https://docs.manim.community/)
+- [Manim Community Discord](https://www.manim.community/discord/)
+- [Agent Skills Spec](https://agentskills.io)
+- [3Blue1Brown](https://www.youtube.com/@3blue1brown)
