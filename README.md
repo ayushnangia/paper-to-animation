@@ -178,8 +178,14 @@ MIT
 
 ## Acknowledgments
 
+### Adithya S K
+The `rules/` directory structure and SKILL.md index pattern in this repo is directly inspired by [adithya-s-k/manim_skill](https://github.com/adithya-s-k/manim_skill) - a comprehensive Manim skills collection with individual topic files, frontmatter metadata, and working examples. If you are looking for Manim-specific best practices (not paper-to-video pipeline), check out that repo.
+
+### Remotion Skills
+The skills distribution format (`npx skills add`) is powered by the [Agent Skills](https://github.com/remotion-dev/skills) open standard by [Remotion](https://github.com/remotion-dev). Their work on making AI agent skills installable with a single command is what makes this repo easy to use.
+
 ### Manim Community
-The dedicated team maintaining [Manim Community Edition](https://github.com/ManimCommunity/manim) - the framework that makes all of this possible.
+The dedicated team maintaining [Manim Community Edition](https://github.com/ManimCommunity/manim) - the animation framework that makes all of this possible.
 
 ### Grant Sanderson (3Blue1Brown)
 Creator of the original Manim animation engine and the [3Blue1Brown](https://www.youtube.com/@3blue1brown) YouTube channel, whose work inspired an entirely new paradigm for mathematical visualization.
@@ -188,5 +194,6 @@ Creator of the original Manim animation engine and the [3Blue1Brown](https://www
 
 - [Manim Community Docs](https://docs.manim.community/)
 - [Manim Community Discord](https://www.manim.community/discord/)
-- [Agent Skills Spec](https://agentskills.io)
+- [Agent Skills Spec](https://agentskills.io) / [remotion-dev/skills](https://github.com/remotion-dev/skills)
+- [adithya-s-k/manim_skill](https://github.com/adithya-s-k/manim_skill)
 - [3Blue1Brown](https://www.youtube.com/@3blue1brown)
